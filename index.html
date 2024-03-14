@@ -28,7 +28,51 @@
                 </script>
             </div>
         </div>
-        <div id="dataReg">
+        <div id="dataReg" style="display:grid;grid-template-rows: 1fr 1fr;">
+            <div style="display:grid;grid-template-columns: 1fr 1fr;">
+                <div id=pltRegDiv style="display:grid;grid-template-columns: 6vw 4vw 4vw 4vw 5vw 4vw">
+                    <div class="pltPut">
+                        <h6>일자</h6>
+                        <input type="date" class="inplt" id="pltDate" value="yyyy-MM-dd">
+                        <script>
+                            document.getElementById("pltDate").valueAsDate = new Date();
+                        </script>
+                    </div>
+                    <div class="pltPut">
+                        <h6 style="width:3.8vw">PLT 유형</h6>
+                        <input type="text" class="inplt">
+                    </div>
+                    <div class="pltPut">
+                        <h6 style="width:3.8vw">입고수량</h6>
+                        <input type="text" class="inplt">
+                    </div>
+                    <div class="pltPut">
+                        <h6 style="width:3.8vw">사용수량</h6>
+                        <input type="text" class="inplt">
+                    </div>
+                    <div class="pltPut">
+                        <h6 style="width:4.8vw">비고</h6>
+                        <input type="text" class="inplt" style="width:5vw">
+                    </div>
+                    <div>
+                        <input type="button" id="pltReg" value="PLT 등록" onclick="regPLT()" style="height:67%;margin:3rem">
+                    </div>    
+                </div>
+                <div style="display:grid;grid-template-rows: 1fr 5fr;">
+                    <h6 style="margin:0rem">PLT 재고 현황</h6>
+                    <table id="pltTable" style="overflow-y: scroll">
+                        <thead>
+                            <tr>
+                                <th>PLT 유형</th>
+                                <th>재고수량</th>
+                            </tr>
+                        </thead>
+                        <tbody id="pltTableTbody" >
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div>
             <table style="width:100% ;table-layout:fixed">
                 <tr id="trReg">
                     <td>
@@ -42,35 +86,38 @@
                         <h5>관리번호</h5>
                         <input class="inputReg" type="text" id="inNo">
                     </td>
-                    
                     <td>
                         <h5>품명</h5>
                         <input class="inputReg"type="text" id="inDes">
                     </td>
-                   
                     <td>
                         <h5>비고</h5>
                         <input class="inputReg" type="text" id="inRe">
                     </td>
                 </tr>
             </table>
-           
+        </div>   
 
         </div>
         <div>
             <table id="dataTable">
                 <thead>
                     <tr>
-                        <th>입고일</th>
-                        <th>관리번호</th>
-                        <th>품명</th>
-                        <th>입고수량(EA)</th>
-                        <th>입고수량(PLT)</th>
-                        <th>비고</th>
-                        <th>출고(EA)</th>
-                        <th>출고수량(PLT)</th>
-                        <th>재고수량(EA)</th>
-                        <th>재고수량(PLT)</th>
+                        <th rowspan="2" width="13%">입고일</th>
+                        <th rowspan="2" width="13%">관리번호</th>
+                        <th rowspan="2" width="13%">품명</th>
+                        <th colspan="2">입고</th>
+                        <th rowspan="2" width="20%">비고</th>
+                        <th colspan="2">출고</th>
+                        <th colspan="2">재고</th>
+                    </tr>
+                    <tr>
+                        <th>EA</th>
+                        <th>PLT</th>
+                        <th>EA</th>
+                        <th>PLT</th>
+                        <th>EA</th>
+                        <th>PLT</th>
                     </tr>
                 </thead>
                 <tbody id="dataTableTbody">

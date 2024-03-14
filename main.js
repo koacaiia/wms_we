@@ -56,7 +56,7 @@ function initDataTableTbody(){
             const tr=document.createElement("tr");
             tr.setAttribute("id",tdValue[i]["bl"]+"_"+tdValue[i]["description"]);
             tr.addEventListener("click",function(e){
-                const clickIndex=(e.target.parentNode.rowIndex-1);
+                const clickIndex=(e.target.parentNode.rowIndex-2);
                 tr.classList.toggle("selected");    
                 const trList = document.querySelectorAll("#dataTableTbody tr");
                 clickValue=[trList[clickIndex].children[0].innerText,trList[clickIndex].children[1].innerText,trList[clickIndex].children[2].innerText,trList[clickIndex].children[5].innerText];
@@ -285,8 +285,18 @@ function outC(){
     const preDiv=document.getElementById("outPreTableDiv");
     preDiv.classList.toggle("hidden");
 }
-if(window.navigator.platform!="Win32"){
-    const body=document.querySelector("body");
-    body.style("grid-template-rows","1fr 1.5fr");
-
+function regPLT(){
+    const date = document.getElementById("pltDate").value;
+    const type = document.getElementsByClassName("inplt")[1].value;
+    const inNum = document.getElementsByClassName("inplt")[2].value;
+    const outNum = document.getElementsByClassName("inplt")[3].value;
+    const re = document.getElementsByClassName("inplt")[4].value;
+    const data = {
+        date : date,
+        type : type,
+        inNum : inNum,
+        outNum : outNum,
+        re : re
+    }
+    console.log(data);
 }
