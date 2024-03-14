@@ -287,5 +287,6 @@ function outC(){
 }
 if(window.navigator.platform!="Win32"){
     const body=document.querySelector("body");
-    body.setAttribute("grid-template-rows","1fr 1.5fr");
+    body.style("grid-template-rows","1fr 1.5fr");
+
 }
