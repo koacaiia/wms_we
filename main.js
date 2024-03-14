@@ -1,3 +1,4 @@
+
 const firebaseConfig = {
     apiKey: "AIzaSyDLzmZyt5nZwCk98iZ6wi01y7Jxio1ppZQ",
     authDomain: "fine-bondedwarehouse.firebaseapp.com",
@@ -283,4 +284,8 @@ function outC(){
     comDiv.classList.toggle("hidden");
     const preDiv=document.getElementById("outPreTableDiv");
     preDiv.classList.toggle("hidden");
+}
+if(window.navigator.platform!="Win32"){
+    const body=document.querySelector("body");
+    body.setAttribute("style","grid-template-rows: 1fr 1.5fr");
 }
