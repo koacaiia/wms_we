@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.2/xlsx.full.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-database-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-analytics-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-storage-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-messaging-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-functions-compat.js"></script>
+</head>
+<body >
+    <div class=mainDiv id="dataDiv" >
+        <div id="dataTitle">
+            <div class="dateDiv">
+                <input class="date" type="date" id="startDateD" value="yyyy-MM-dd">
+                <h3>~</h3>
+                <input class="date" type="date" id="endDateD" value="yyyy-MM-dd">
+                <button id="searchBtnD" onclick="searchDate()">재고현황조회</button>
+                <button id="regBtnD" onclick="regData()">입고목록 업로드</button>
+                <script>
+                    document.getElementById('startDateD').valueAsDate = new Date();
+                    document.getElementById('endDateD').valueAsDate = new Date();
+                </script>
+            </div>
+        </div>
+        <div id="dataReg">
+            <table style="width:100% ;table-layout:fixed">
+                <tr id="trReg">
+                    <td>
+                        <h5 >입고일</h5>
+                        <input class="inputReg" type="date" id="inDate" value="yyyy-MM-dd">
+                        <script>
+                            document.getElementById('inDate').valueAsDate = new Date();
+                        </script>
+                    </td>
+                    <td>
+                        <h5>관리번호</h5>
+                        <input class="inputReg" type="text" id="inNo">
+                    </td>
+                    
+                    <td>
+                        <h5>품명</h5>
+                        <input class="inputReg"type="text" id="inDes">
+                    </td>
+                   
+                    <td>
+                        <h5>비고</h5>
+                        <input class="inputReg" type="text" id="inRe">
+                    </td>
+                </tr>
+            </table>
+           
+
+        </div>
+        <div>
+            <table id="dataTable">
+                <thead>
+                    <tr>
+                        <th>입고일</th>
+                        <th>관리번호</th>
+                        <th>품명</th>
+                        <th>입고수량(EA)</th>
+                        <th>입고수량(PLT)</th>
+                        <th>비고</th>
+                        <th>출고(EA)</th>
+                        <th>출고수량(PLT)</th>
+                        <th>재고수량(EA)</th>
+                        <th>재고수량(PLT)</th>
+                    </tr>
+                </thead>
+                <tbody id="dataTableTbody">
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class=mainDiv id="logDiv" >
+        <div id="logTitle">
+            <div class="dateDiv">
+                <input class="date" type="date" id="startDate" value="yyyy-MM-dd">
+                <h3>~</h3>
+                <input class="date" type="date" id="endDate" value="yyyy-MM-dd">
+                <button id="searchBtn" onclick="searchDate()">출고현황조회</button>
+                <script>
+                    document.getElementById('startDate').valueAsDate = new Date();
+                    document.getElementById('endDate').valueAsDate = new Date();
+                </script>
+            </div>
+             </div>
+        <div class="outDiv">
+            <div class="outLog" id="outPre" >
+                <div class="outLogTitle">
+                    <button style="border-radius:0.625rem" onclick="outC()">기간내 출고예정 현황</button>
+                    <div class="outTitle">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>출고예정일</th>
+                                    <th>관리번호</th>
+                                    <th>품명</th>
+                                    <th>출고예정 건수</th>
+                                    <th>출고예정수량(EA)</th>
+                                    <th>출고예정수량(PLT)</th>
+                                </tr>
+                            </thead>
+                            <tbody id="outPreTotal">
+
+                            </tbody>    
+                        </table>
+                    </div>
+                </div>
+                <div class="outLogTitle">
+                    <button style="border-radius:0.625rem" onclick="outC()">기간내 출고완료 현황</button>
+                    <div class="outTitle">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>출고완료일</th>
+                                    <th>관리번호</th>
+                                    <th>품명</th>
+                                    <th>출고완료 건수</th>
+                                    <th>출고완료수량(EA)</th>
+                                    <th>출고완료수량(PLT)</th>
+                                </tr>
+                            </thead>
+                            <tbody id="outCompleteTotal">
+
+                            </tbody>    
+                        </table>
+                </div>
+
+                </div>
+                    
+            </div>
+            <div class="outLogData" id="outComplete" >
+                <div id="outPreTableDiv" >
+                    <table  id="outPreTable" >
+                        <thead>
+                            <tr>
+                                <th>출고예정일</th>
+                                <th>관리번호</th>
+                                <th>품명</th>
+                                <th>출고처</th>
+                                <th>출고수량(EA)</th>
+                                <th>출고수량(PLT)</th>
+                                <th>비고</th>
+                            </tr>
+                            <tbody id="outPreTableTbody" >
+                            </tbody>    
+                        </thead>    
+                        
+                    </table>
+                </div>   
+                
+                <div id="outCompleteTableDiv" class="hidden">
+                    <table id="outCompleteTable">
+                        <thead>
+                            <tr>
+                                <th>출고완료일</th>
+                                <th>관리번호</th>
+                                <th>품명</th>
+                                <th>출고처</th>
+                                <th>출고수량(EA)</th>
+                                <th>출고상태(PLT)</th>
+                                <th>비고</th>
+                            </tr>
+                        </thead>
+                        <tbody id="outCompleteTableTbody">
+                        </tbody>    
+                    </table>
+                </div> 
+                
+            </div>
+        </div>
+        
+    </div>
+    <script src="main.js"></script>    
+</body>
+</html>
