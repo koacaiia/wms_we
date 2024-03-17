@@ -15,73 +15,33 @@
 </head>
 <body >
     <div class=mainDiv id="dataDiv" >
-        <div id="dataTitle">
             <div class="dateDiv">
-                <input class="date" type="date" id="startDateD" value="yyyy-MM-dd">
+                <!-- <input class="date" type="date" id="startDateD" value="yyyy-MM-dd">
                 <h3>~</h3>
                 <input class="date" type="date" id="endDateD" value="yyyy-MM-dd">
-                <button id="searchBtnD" onclick="searchDate()">재고현황조회</button>
-                <button id="regBtnD" onclick="regData()">입고목록 업로드</button>
-                <script>
+                <button id="searchBtnD" onclick="searchDate()">재고현황조회</button> -->
+                
+                <h4 id="pltStock">PLT 재고 현황</h4>
+                <div style="display:grid;grid-template-rows:1fr 1fr">
+                    <button class="btnPlt"id="regBtnD" onclick="popPlt()">PLT 등록</button>
+                    <button class="btnPlt" id="detailPlt" onclick="pltDetail()">PLT 사용내역 조회</button>
+                </div>
+                
+                
+                <!-- <script>
                     document.getElementById('startDateD').valueAsDate = new Date();
                     document.getElementById('endDateD').valueAsDate = new Date();
-                </script>
+                </script> -->
             </div>
-        </div>
-        <div id="dataReg" style="display:grid;grid-template-rows: 1fr 1fr;">
-            <div style="display:grid;grid-template-columns: 1fr 1fr;">
-                <div id=pltRegDiv style="display:grid;grid-template-columns: 6vw 4vw 4vw 4vw 5vw 4vw">
-                    <div class="pltPut">
-                        <h6>일자</h6>
-                        <input type="date" class="inplt" id="pltDate" value="yyyy-MM-dd">
-                        <script>
-                            document.getElementById("pltDate").valueAsDate = new Date();
-                        </script>
-                    </div>
-                    <div class="pltPut">
-                        <h6 style="width:3.8vw">PLT 유형</h6>
-                        <input type="text" class="inplt">
-                    </div>
-                    <div class="pltPut">
-                        <h6 style="width:3.8vw">입고수량</h6>
-                        <input type="text" class="inplt">
-                    </div>
-                    <div class="pltPut">
-                        <h6 style="width:3.8vw">사용수량</h6>
-                        <input type="text" class="inplt">
-                    </div>
-                    <div class="pltPut">
-                        <h6 style="width:4.8vw">비고</h6>
-                        <input type="text" class="inplt" style="width:5vw">
-                    </div>
-                    <div>
-                        <input type="button" id="pltReg" value="PLT 등록" onclick="regPLT()" style="height:67%;margin:3rem">
-                    </div>    
-                </div>
-                <div style="display:grid;grid-template-rows: 1fr 5fr;">
-                    <h6 style="margin:0rem">PLT 재고 현황</h6>
-                    <table id="pltTable" style="overflow-y: scroll">
-                        <thead>
-                            <tr>
-                                <th>PLT 유형</th>
-                                <th>재고수량</th>
-                            </tr>
-                        </thead>
-                        <tbody id="pltTableTbody" >
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            <div>
+        <div id="dataReg" style="display:grid;grid-template-columns: 7fr 1fr;">
             <table style="width:100% ;table-layout:fixed">
                 <tr id="trReg">
                     <td>
                         <h5 >입고일</h5>
                         <input class="inputReg" type="date" id="inDate" value="yyyy-MM-dd">
-                        <script>
-                            document.getElementById('inDate').valueAsDate = new Date();
-                        </script>
+                        
                     </td>
+                    
                     <td>
                         <h5>관리번호</h5>
                         <input class="inputReg" type="text" id="inNo">
@@ -94,11 +54,17 @@
                         <h5>비고</h5>
                         <input class="inputReg" type="text" id="inRe">
                     </td>
+                    <script>
+                        document.getElementById('inDate').valueAsDate = new Date();
+                    </script>   
                 </tr>
             </table>
+            <div style="display:grid;grid-template-rows:1fr 1fr">
+                <button id="regBtnD" onclick="regData()" style="height:85%;width:90%;font-size:0.7rem">재고목록 수정등록</button>
+                <button id="stockDown" onclick="btnStock()" style="height:85%;width:90%;font-size:0.7rem">재고목록 엑셀받기</button>
+            </div>
+            
         </div>   
-
-        </div>
         <div>
             <table id="dataTable">
                 <thead>
@@ -124,14 +90,17 @@
                 </tbody>
             </table>
         </div>
+        </div>
+        
     </div>
     <div class=mainDiv id="logDiv" >
         <div id="logTitle">
-            <div class="dateDiv">
+            <div style="display:grid;grid-template-columns:2fr 1fr 2fr 2.5fr 2.5fr">
                 <input class="date" type="date" id="startDate" value="yyyy-MM-dd">
                 <h3>~</h3>
                 <input class="date" type="date" id="endDate" value="yyyy-MM-dd">
                 <button id="searchBtn" onclick="searchDate()">출고현황조회</button>
+                <button id="btnOutDown" onclick="btnOutDown()">출고내역 엑셀받기</button>
                 <script>
                     document.getElementById('startDate').valueAsDate = new Date();
                     document.getElementById('endDate').valueAsDate = new Date();
@@ -141,7 +110,7 @@
         <div class="outDiv">
             <div class="outLog" id="outPre" >
                 <div class="outLogTitle">
-                    <button style="border-radius:0.625rem" onclick="outC()">기간내 출고예정 현황</button>
+                    <button onclick="outC()" style="font-size:1rem;font-style:bold ;width:80%;margin-left:10%">기간내 출고예정 현황</button>
                     <div class="outTitle">
                         <table>
                             <thead>
@@ -161,7 +130,7 @@
                     </div>
                 </div>
                 <div class="outLogTitle">
-                    <button style="border-radius:0.625rem" onclick="outC()">기간내 출고완료 현황</button>
+                    <button onclick="outC()" style="font-size:1rem;font-style:bold ;width:80%;margin-left:10%">기간내 출고완료 현황</button>
                     <div class="outTitle">
                         <table>
                             <thead>
@@ -183,29 +152,37 @@
                 </div>
                     
             </div>
-            <div class="outLogData" id="outComplete" >
+            <div class="outLogData" >
                 <div id="outPreTableDiv" >
-                    <table  id="outPreTable" >
-                        <thead>
-                            <tr>
-                                <th>출고예정일</th>
-                                <th>관리번호</th>
-                                <th>품명</th>
-                                <th>출고처</th>
-                                <th>출고수량(EA)</th>
-                                <th>출고수량(PLT)</th>
-                                <th>비고</th>
-                            </tr>
-                            <tbody id="outPreTableTbody" >
-                            </tbody>    
-                        </thead>    
-                        
-                    </table>
+                    <div style="display:grid;grid-template-rows: 1fr 8fr;height:100%">
+                        <h3>출고예정 현황</h3>
+                    <div style="overflow-y:scroll;height:100%">
+                        <table  id="outPreTable" >
+                            <thead>
+                                <tr>
+                                    <th>출고예정일</th>
+                                    <th>관리번호</th>
+                                    <th>품명</th>
+                                    <th>출고처</th>
+                                    <th>출고수량(EA)</th>
+                                    <th>출고수량(PLT)</th>
+                                    <th>비고</th>
+                                </tr>
+                                <tbody id="outPreTableTbody" >
+                                </tbody>    
+                            </thead>    
+                        </table>
+                    </div>
+                    </div>
+                    
                 </div>   
                 
                 <div id="outCompleteTableDiv" class="hidden">
-                    <table id="outCompleteTable">
-                        <thead>
+                    <div style="display:grid;grid-template-rows: 1fr 8fr;height:100%">
+                        <h3>출고완료 현황</h3>
+                    <div style="overflow-y:scroll;height:100%">
+                    <table id="outCompleteTable" >
+                        <thead >
                             <tr>
                                 <th>출고완료일</th>
                                 <th>관리번호</th>
@@ -219,9 +196,93 @@
                         <tbody id="outCompleteTableTbody">
                         </tbody>    
                     </table>
+                    </div>
+                    </div>
                 </div> 
                 
             </div>
+        </div>
+        
+    </div>
+    <div id=pltRegDiv style="display:none">
+        <h5>PLT 등록</h5>
+        <div style="display:grid;grid-template-columns :1fr 1fr 1fr 1fr 1fr">
+            <div class="pltPut" >
+                <h6>일자</h6>
+                <input type="date" class="inplt" id="pltDate" value="yyyy-MM-dd">
+                <script>
+                    document.getElementById("pltDate").valueAsDate = new Date();
+                </script>
+            </div>
+            <div class="pltPut">
+                <select id="pltType">
+                    <option style="text-align: center;" value="1">팔레트 유형</option>
+                    <option value="Kpp">Kpp</option>
+                    <option value="아주">아주</option>
+                    <option value="목재">목재</option>
+                    <option value="검은색연질플라스틱">검은색연질플라스틱</option>
+                </select>    
+                <input type="text" class="inplt">
+            </div>
+            <div class="pltPut">
+                <h6 style="width:3.8vw">입고수량</h6>
+                <input type="text" class="inplt">
+            </div>
+            <div class="pltPut">
+                <h6 style="width:3.8vw">사용수량</h6>
+                <input type="text" class="inplt">
+            </div>
+            <div class="pltPut">
+                <h6 style="width:4.8vw">비고</h6>
+                <input type="text" class="inplt" style="width:5vw">
+            </div>
+        </div>
+        <div id="pltRegBtnDiv" style="display:grid;grid-template-columns :1fr 1fr" >
+            <button id="pltReg"  onclick="regPLT()">PLT 등록</button>
+            <button id="pltRegCancel"  onclick="regPltCancel()">취소</button>
+        </div>
+        
+    </div>
+    <div id=outTrClick style="display:none">
+        <h5>출고내용 수정</h5>
+        <div style="display:grid;grid-template-columns :1fr 1fr 1fr 1fr 1fr 1fr 1fr">
+            <div class="pltPut" >
+                <h6>일자</h6>
+                <input type="date" class="outTrClickData" id="outRegDate" value="yyyy-MM-dd">
+                <script>
+                    document.getElementById("pltDate").valueAsDate = new Date();
+                </script>
+            </div>
+            <div class="outTrClickData">
+                <h6 style="width:3.8vw">관리번호</h6>
+                <input type="text" class="inplt">
+            </div>
+            <div class="outTrClickData">
+                <h6 style="width:3.8vw">품명</h6>
+                <input type="text" class="inplt">
+            </div>
+            <div class="outTrClickData">
+                <h6 style="width:3.8vw">출고처</h6>
+                <input type="text" class="inplt">
+            </div>
+            <div class="outTrClickData">
+                <h6 style="width:3.8vw">출고수량(EA)</h6>
+                <input type="text" class="inplt">
+            </div>
+            <div class="outTrClickData">
+                <h6 style="width:3.8vw">출고수량(PLT)</h6>
+                <input type="text" class="inplt">
+            </div>
+            <div class="outTrClickData">
+                <h6 style="width:4.8vw">비고</h6>
+                <input type="text" class="inplt" style="width:5vw">
+            </div>
+        </div>
+        <div id="outRegBtnDiv" style="display:grid;grid-template-columns :1fr 1fr 1fr 1fr" >
+            <button id="outRegDel"  onclick="outDataDel()">출고내역삭제</button>
+            <button id="outStatusChange"  onclick="outStatusChange()">출고상황변경</button>
+            <button id="outRegChange"  onclick="outDataChange()">출고내용변경</button>
+            <button id="outRegCancel"  onclick="outRegCancel()">취소</button>
         </div>
         
     </div>
