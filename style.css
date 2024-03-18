@@ -23,12 +23,12 @@ body {
     grid-template-columns:7fr 1fr;
     border-radius: 0.625rem;
     margin:0.1rem;
-    background-color: rgb(211, 219, 237);
+    background-color: rgb(140, 151, 176);
 }
 #dataReg{
     border-radius: 0.625rem;
     margin:0.1rem;
-    background-color: rgb(211, 219, 237);
+    background-color: rgb(140, 151, 176);
 }
 h3, h5,h6, h4{
     text-align:center;
@@ -78,7 +78,7 @@ table{
 .outLogTitle{
     border-radius: 0.625rem;
     margin:0.1rem;
-    background-color: rgb(211, 219, 237);
+    background-color: rgb(140, 151, 176);
     display:grid;
     grid-template-rows: 3vh 16vh;
 }
