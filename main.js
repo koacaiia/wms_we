@@ -548,9 +548,10 @@ if(mobileCheck&&document.title=="Web"){
 if(mobileCheck){
     const tbody=document.getElementById("dataTableTbody");
     const trList=tbody.querySelectorAll("tr");
+    console.log(trList);
     trList.cells[3].style.display="none";
     trList.cells[4].style.display="none";
-    trList.cells[5].style.display="none";
-    trList.cells[6].style.display="none";
+    trList.cells[7].style.display="none";
+    trList.cells[8].style.display="none";
     
 }
