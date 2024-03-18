@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Web</title>
+    <title>Mobile</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.2/xlsx.full.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-app-compat.js"></script>
@@ -13,35 +13,18 @@
     <script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-messaging-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-functions-compat.js"></script>
 </head>
-<body id="bodyW">
-    <div class=mainDiv id="dataDiv" >
-            <div class="dateDiv">
-                <!-- <input class="date" type="date" id="startDateD" value="yyyy-MM-dd">
-                <h3>~</h3>
-                <input class="date" type="date" id="endDateD" value="yyyy-MM-dd">
-                <button id="searchBtnD" onclick="searchDate()">재고현황조회</button> -->
+<body id="bodyM">
+    <div class=mainDiv id="dataDivM" >
                 
-                <h4 id="pltStock">PLT 재고 현황</h4>
-                <div style="display:grid;grid-template-rows:1fr 1fr">
-                    <button class="btnPlt"id="regBtnD" onclick="popPlt()">PLT 등록</button>
-                    <button class="btnPlt" id="detailPlt" onclick="pltDetail()">PLT 사용내역 조회</button>
-                </div>
+                <h4 style="margin:0rem" id="pltStock">PLT 재고 현황</h4>
                 
-                
-                <!-- <script>
-                    document.getElementById('startDateD').valueAsDate = new Date();
-                    document.getElementById('endDateD').valueAsDate = new Date();
-                </script> -->
-            </div>
-        <div id="dataReg" style="display:grid;grid-template-columns: 7fr 1fr;">
+        <!-- <div id="dataReg" style="display:none;">
             <table style="width:100% ;table-layout:fixed">
                 <tr id="trReg">
                     <td>
                         <h5 >입고일</h5>
                         <input class="inputReg" type="date" id="inDate" value="yyyy-MM-dd">
-                        
                     </td>
-                    
                     <td>
                         <h5>관리번호</h5>
                         <input class="inputReg" type="text" id="inNo">
@@ -64,8 +47,8 @@
                 <button id="stockDown" onclick="btnStock()" style="height:85%;width:90%;font-size:0.7rem">재고목록 엑셀받기</button>
             </div>
             
-        </div>   
-        <div>
+        </div>    -->
+        <div style="overflow-y:scroll;">
             <table id="dataTable">
                 <thead>
                     <tr>
@@ -153,7 +136,7 @@
                 </div>
                     
             </div>
-            <div class="outLogData" >
+            <div class="outLogData" style="display:none" >
                 <div id="outPreTableDiv" >
                     <div style="display:grid;grid-template-rows: 1fr 8fr;height:100%">
                         <h3>출고예정 현황</h3>

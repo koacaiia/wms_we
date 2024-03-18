@@ -1,8 +1,13 @@
-body {
+
+#bodyW{
     display:grid;
     grid-template-columns:1fr 1fr;
     grid-gap:0.3rem;
-    
+}
+#bodyM{
+    display:grid;
+    grid-template-rows:35vh 64vh;
+    grid-gap:0.3rem;
 }
 .mainDiv{
     height:96vh;
@@ -103,6 +108,10 @@ table{
 #dataDiv{
     display:grid;
     grid-template-rows:10vh 10vh 75vh;
+}
+#dataDivM{
+    display:grid;
+    grid-template-rows:5vh 25vh;
 }
 .pltPut .outTrClickData{
     display:grid;
