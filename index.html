@@ -95,11 +95,12 @@
     </div>
     <div class=mainDiv id="logDiv" >
         <div id="logTitle">
-            <div style="display:grid;grid-template-columns:2fr 1fr 2fr 2.5fr 2.5fr">
+            <div style="display:grid;grid-template-columns:2fr 1fr 2fr 2fr 2fr 2fr;grid-gap:0.5%">
                 <input class="date" type="date" id="startDate" value="yyyy-MM-dd">
                 <h3>~</h3>
                 <input class="date" type="date" id="endDate" value="yyyy-MM-dd">
-                <button id="searchBtn" onclick="searchDate()">출고현황조회</button>
+                <button id="searchBtn" onclick="searchDate()">기간내 출고현황</button>
+                <button id="searchBtn" onclick="searchDateAll()">전기간 출고현황</button>
                 <button id="btnOutDown" onclick="btnOutDown()">출고내역 엑셀받기</button>
                 <script>
                     document.getElementById('startDate').valueAsDate = new Date();

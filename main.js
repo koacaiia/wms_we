@@ -21,8 +21,8 @@ let outKeyPath="";
 let outTrClickValu=[];
 let outStockValue={};
 const key_f=["date","managementNo","description","outwarehouse","eaQty","pltQty","remark"];
-console.log(location)
 function transDate(date){
+    console.log("tranDate Date Value:",date);
     try{
         let month = date.getMonth() + 1;
         let day = date.getDate();
@@ -112,7 +112,7 @@ function initDataTableTbody(){
 }
 initLogTableTbody(transDate(new Date()),transDate(new Date()),"init");  
 function initLogTableTbody(sDate,eDate,init){
-    console.log(init)
+    console.log("LogTableTbody Reload Value:",init)
     console.log(sDate,eDate);
     const sYear = sDate.substring(0,4);
     const eYear = eDate.substring(0,4);
@@ -345,6 +345,14 @@ function searchDate(){
     document.getElementById("outPreTableTbody").replaceChildren();
     document.getElementById("outCompleteTableTbody").replaceChildren();
     initLogTableTbody(sDate,eDate);
+}
+function searchDateAll(){
+    const eDate=new Date();
+    let newDay=new Date(eDate)
+    newDay.setDate(eDate.getDate()+3);
+    document.getElementById("outPreTableTbody").replaceChildren();
+    document.getElementById("outCompleteTableTbody").replaceChildren();
+    initLogTableTbody("2024-02-01",transDate(newDay));
 }
 function regData(){
     const trValue=document.querySelectorAll("#trReg input");
