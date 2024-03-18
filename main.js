@@ -272,6 +272,7 @@ function initLogTableTbody(sDate,eDate,init){
             tbody.appendChild(tr);
         }
         if(init=="init"){
+            if(document.title=="Web"){
             for(let k in outStockValue){
                 const trId=k;
                 const tr=document.getElementById(trId);
@@ -296,7 +297,7 @@ function initLogTableTbody(sDate,eDate,init){
                 totalPl.innerHTML=parseInt(tr.cells[4].innerHTML)-parseInt(tdOutPl.innerHTML);
                 tr.appendChild(totalPl);
                 }}
-        }
+        }}
 
        
             const tbodyTc=document.getElementById("outCompleteTotal");
