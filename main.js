@@ -539,4 +539,6 @@ const mobileCheck=/Android|iPhone/i.test(navigator.userAgent);
 console.log(mobileCheck);
 if(mobileCheck){
     alert("모바일 환경에서는 사용이 제한됩니다.");
+    const body = document.querySelector("body");
+    body.style.gridTemplateRows="1fr 1fr";
 }
