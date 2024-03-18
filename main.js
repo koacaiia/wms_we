@@ -99,7 +99,7 @@ function initDataTableTbody(){
                 td.innerHTML=tdValue[i][j];
                 tr.appendChild(td);
                 if(mobileCheck){
-                    td.style.fontSize="0.5rem";
+                    td.style.fontSize="0.6rem";
                     if(j=="incargo"||j=="Pqty"){
                         td.style.display="none";
                     }
