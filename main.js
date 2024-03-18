@@ -535,10 +535,21 @@ function outDataChange(){
     }
 }
 // const mobileCheck = navigator.userAgent.match(/Android/i) || navigator.userAgent.match(/webOS/i) || navigator.userAgent.match(/iPhone/i) || navigator.userAgent.match(/iPad/i) || navigator.userAgent.match(/iPod/i) || navigator.userAgent.match(/BlackBerry/i) || navigator.userAgent.match(/Windows Phone/i);
+
+
 const mobileCheck=/Android|iPhone/i.test(navigator.userAgent);
 console.log(mobileCheck);
 if(mobileCheck&&document.title=="Web"){
     alert("모바일 환경에서는 사용이 제한됩니다.");
     // window.location.href="mobile.html";
     window.open("mobile.html");
+}
+if(mobileCheck){
+    const tbody=document.getElementById("dataTableTbody");
+    const trList=tbody.querySelectorAll("tr");
+    trList.cells[3].style.display="none";
+    trList.cells[4].style.display="none";
+    trList.cells[5].style.display="none";
+    trList.cells[6].style.display="none";
+    
 }
