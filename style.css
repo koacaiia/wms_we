@@ -94,7 +94,7 @@ table{
     border-radius: 0.4rem;
     margin:0.1rem;
     display:grid;
-    grid-template-rows: 6vh 20.5vh;
+    grid-template-rows: 4.5vh 22.5vh;
 }
 .outTitle{
     overflow-y:scroll;
