@@ -92,15 +92,20 @@ function initDataTableTbody(){
                 clickValue=[trList[clickIndex].children[0].innerText,trList[clickIndex].children[1].innerText,trList[clickIndex].children[2].innerText,trList[clickIndex].children[5].innerText];
                 for(let i in clickValue){
                     document.getElementById("trReg").children[i].children[1].value=clickValue[i];
-                    console.log(document.getElementById("trReg").children[i].children[1]);
-                    
                 }}
             );            
             for(let j in tdValue[i]){
                 const td=document.createElement("td");
                 td.innerHTML=tdValue[i][j];
                 tr.appendChild(td);
+                if(mobileCheck){
+                    td.style.fontSize="0.5rem";
+                    if(j=="incargo"||j=="Pqty"){
+                        td.style.display="none";
+                    }
+                }
             }
+            if(!mobileCheck)
             tbody.appendChild(tr);
         }
     });
@@ -540,18 +545,8 @@ function outDataChange(){
 
 const mobileCheck=/Android|iPhone/i.test(navigator.userAgent);
 console.log(mobileCheck);
-if(mobileCheck&&document.title=="Web"){
+if(mobileCheck&&document.title!="Web"){
     alert("모바일 환경에서는 사용이 제한됩니다.");
-    // window.location.href="mobile.html";
-    window.open("mobile.html");
-}
-if(mobileCheck){
-    const tbody=document.getElementById("dataTableTbody");
-    const trList=tbody.querySelectorAll("tr");
-    console.log(trList);
-    trList.cells[3].style.display="none";
-    trList.cells[4].style.display="none";
-    trList.cells[6].style.display="none";
-    trList.cells[7].style.display="none";
-    
+    window.location.href="mobile.html";
+    // window.open("mobile.html");
 }
