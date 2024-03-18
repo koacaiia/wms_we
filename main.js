@@ -1,4 +1,9 @@
-
+const mobileCheck=/Android|iPhone/i.test(navigator.userAgent);
+if(mobileCheck&&document.title=="Web"){
+    alert("모바일 환경에서는 사용이 제한됩니다.");
+    window.location.href="mobile.html";
+    // window.open("mobile.html");
+}
 const firebaseConfig = {
     apiKey: "AIzaSyDLzmZyt5nZwCk98iZ6wi01y7Jxio1ppZQ",
     authDomain: "fine-bondedwarehouse.firebaseapp.com",
@@ -446,10 +451,26 @@ function pltDetail(){
     alert("작업 진행중입니다.");
 }
 function btnOutDown(){
-    alert("작업 진행중입니다.");
+    const outDiv=document.getElementById("outCompleteTableDiv").classList.value;
+    let wb;
+    let fileName;
+    const sDate=document.getElementById("startDate").value;
+    const eDate=document.getElementById("endDate").value;
+    if(outDiv=="hidden"){
+        wb = XLSX.utils.table_to_book(document.getElementById('outPreTable'), {sheet:"출고예정",raw:true});
+        fileName=consigneeName+"_출고예정현황("+sDate+"-"+eDate+").xlsx";
+    }
+    else{
+        wb = XLSX.utils.table_to_book(document.getElementById('outCompleteTable'), {sheet:"출고완료",raw:true});
+        fileName=consigneeName+"_출고완료현황("+sDate+"-"+eDate+").xlsx";
+    }
+    XLSX.writeFile(wb, (fileName));
 }
 function btnStock(){
-    alert("작업 진행중입니다.");
+    const fileName = consigneeName+"_재고현황.xlsx";
+    const wb = XLSX.utils.table_to_book(document.getElementById('dataTable'), {sheet:"test",raw:true});
+    XLSX.writeFile(wb, (fileName));
+    
 }
 function outTrClick(e){
     
@@ -541,11 +562,10 @@ function outDataChange(){
 }
 // const mobileCheck = navigator.userAgent.match(/Android/i) || navigator.userAgent.match(/webOS/i) || navigator.userAgent.match(/iPhone/i) || navigator.userAgent.match(/iPad/i) || navigator.userAgent.match(/iPod/i) || navigator.userAgent.match(/BlackBerry/i) || navigator.userAgent.match(/Windows Phone/i);
 
+function excelFile(){
+    const fileName = deptName+"_"+clientName+" 출고현황("+dateS+"~"+dateE+").xlsx";
+            const wb = XLSX.utils.table_to_book(document.getElementById('table_data'), {sheet:"test",raw:true});
+            XLSX.writeFile(wb, (fileName));
 
-const mobileCheck=/Android|iPhone/i.test(navigator.userAgent);
-console.log(mobileCheck);
-if(mobileCheck&&document.title=="Web"){
-    alert("모바일 환경에서는 사용이 제한됩니다.");
-    window.location.href="mobile.html";
-    // window.open("mobile.html");
 }
+
