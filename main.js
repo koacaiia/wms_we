@@ -20,9 +20,9 @@ let ={};
 let outKeyPath="";
 let outTrClickValu=[];
 let outStockValue={};
+let outPupInputList=[];
 const key_f=["date","managementNo","description","outwarehouse","eaQty","pltQty","remark"];
 function transDate(date){
-    console.log("tranDate Date Value:",date);
     try{
         let month = date.getMonth() + 1;
         let day = date.getDate();
@@ -53,11 +53,8 @@ function pltStock(){
         }
     }
     let stockTitle="";
-    console.log(pltList);
     for(let i in pltList){
-        
          const stock=parseInt(pltList[i]["in"])-parseInt(pltList[i]["out"]);
-         console.log(parseInt(pltList[i]["in"]),parseInt(pltList[i]["out"]));
          stockTitle=stockTitle+i+" : "+stock+"장 ,";
     }
     document.getElementById("pltStock").innerHTML=stockTitle.substring(0,stockTitle.length-1);
@@ -112,12 +109,6 @@ function initDataTableTbody(){
 }
 initLogTableTbody(transDate(new Date()),transDate(new Date()),"init");  
 function initLogTableTbody(sDate,eDate,init){
-    console.log("LogTableTbody Reload Value:",init)
-    console.log(sDate,eDate);
-    const sYear = sDate.substring(0,4);
-    const eYear = eDate.substring(0,4);
-    const sMonth = sDate.substring(5,7);
-    const eMonth = eDate.substring(5,7);
     const tbodyP=document.getElementById("outPreTableTbody");
     const tbodyC=document.getElementById("outCompleteTableTbody");
     database_f.ref("DeptName/"+deptName+"/OutCargo/").get().then((snapValue)=>{
@@ -145,7 +136,6 @@ function initLogTableTbody(sDate,eDate,init){
                         if(cargo[j]["consigneeName"]==consigneeName){
                             const  dateCheck=cargo[j]["date"]>=sDate;
                             const dateCheck2=cargo[j]["date"]<=eDate;
-                        console.log(dateCheck,dateCheck2);
                             if(cargo[j]["managementNo"].includes(",")){
                                 const no=cargo[j]["managementNo"].split(",");
                                 const desc=cargo[j]["description"].split(",");
@@ -228,7 +218,6 @@ function initLogTableTbody(sDate,eDate,init){
                                 if(cargo[j]["workprocess"]=="미"){
                                 tr.setAttribute("class","outP");    
                                 if(dateCheck&&dateCheck2){
-                                    console.log(dateCheck,dateCheck2);
                                     tbodyP.appendChild(tr);
                                     if(outCountP[keyValue]==undefined){
                                         outCountP[keyValue]={eaQty:tr.cells[4].innerHTML,pltQty:tr.cells[5].innerHTML,count:1};
@@ -366,8 +355,8 @@ function regData(){
             promptContent=promptContent+"\n"+thValue[i].innerText+":"+trValue[i].value;
         }
     }
-    confirm(promptContent+"\n"+"위 내용으로 등록하시겠습니까?");
-    if(confirm){
+    let con=confirm(promptContent+"\n"+"위 내용으로 등록하시겠습니까?");
+    if(con){
     let upLoadValue={};
     database_f.ref("DeptName/"+deptName+"/InCargo/").get().then((snapshot)=>{
         //snapshot 하위노드의 값 가져오기
@@ -414,13 +403,13 @@ function regPLT(){
         re : re
     }
     const key="DeptName/"+deptName+"/PltManagement/"+consigneeName+"/"+type+"/"+date;
-    database_f.ref(key).update(data).then(()=>{location.reload}).catch((e)=>{alert("팔렛트 등록정보 실패",e)});
+    database_f.ref(key).update(data).then(()=>{location.reload()}).catch((e)=>{alert("팔렛트 등록정보 실패",e)});
 }
 function popPlt(){    
     const popup = document.getElementById('pltRegDiv');
     // popup.classList.toggle("pop");
     // 스타일을 지정하여 팝업을 꾸밀 수 있습니다.
-    popup.style.position = "";
+    popup.style.position = "fixed";
     popup.style.top = '50%';
     popup.style.left = '50%';
     popup.style.transform = 'translate(-50%, -50%)';
@@ -435,7 +424,7 @@ function popPlt(){
     // document.body.appendChild(popup);
 }
 function regPltCancel(){
-    const popup = document.getElementById('outRegDiv');
+    const popup = document.getElementById('pltRegDiv');
     popup.style.display = "none";
 }
 function outRegCancel(){
@@ -478,21 +467,22 @@ function outTrClick(e){
         popup.style.display ="grid";
         popup.style.gridTemplateRows="1fr 1fr 1fr";
         const popInputList = popup.querySelectorAll("input");
-        let trValue=[];
         for(let t=0;t<trList.length;t++){
             popInputList[t].value=trList[t].innerHTML;
+            outPupInputList.push(popInputList[t].value);
         }
         const date=trList[0].innerHTML;
         const trPath=clickTr.id;
         outKeyPath="DeptName/"+deptName+"/OutCargo/"+date.substring(5,7)+"월/"+date+"/"+trPath;
+        console.log("outTrClicked",outPupInputList)
 }
 function outDataDel(){
-    confirm("해당 내용을 삭제하시겠습니까?");
-    if(confirm){
-        database_f.ref(outKeyPath.substring(0,outKeyPath.length-2)).remove().then(()=>{console.log("delete Succecced")}).catch((e)=>{console.log(e)});
+    let con=confirm("해당 내용을 삭제하시겠습니까?");
+    if(con){
+        database_f.ref(outKeyPath.substring(0,outKeyPath.length-2)).remove().then(()=>{location.reload();console.log("delete Succecced")}).catch((e)=>{console.log(e)});
         outRegCancel();
     }
-    location.reload();
+    
 }
 function outStatusChange(){
     const status=outKeyPath.substring(outKeyPath.length-1,);
@@ -505,12 +495,14 @@ function outStatusChange(){
         workprocess={workprocess:"미"};
         confirmMsg="출고 완료 건을 출고 예정으로 변경 합니다.";
     }
-    confirm(confirmMsg);
-    if(confirm){
-        database_f.ref(outKeyPath.substring(0,outKeyPath.length-2)).update(workprocess).then(()=>{location.reload}).catch((e)=>{alert(e)});
+    let con=confirm(confirmMsg);
+    if(con){
+        database_f.ref(outKeyPath.substring(0,outKeyPath.length-2)).update(workprocess).then(()=>{location.reload()}).catch((e)=>{alert(e)});
+        
     }
 }
 function outDataChange(){
+    console.log("onDataChangeed",outPupInputList)
     const popup = document.getElementById('outTrClick');
     const popInputList = popup.querySelectorAll("input");
     let trValue=[];
@@ -526,6 +518,25 @@ function outDataChange(){
         pltQty : trValue[5],
         remark : trValue[6]
     }
-    database_f.ref(outKeyPath.substring(0,outKeyPath.length-2)).update(data).then(()=>{location.reload}).catch((e)=>{alert(e)});
-    
+    let confirmMsg="변경된 내용을 저장하시겠습니까?";
+    for(let k=0;k<outPupInputList.length;k++){
+        const changeKey=outPupInputList[k]==Object.values(data)[k];
+        console.log(changeKey)
+        console.log(outPupInputList[k],Object.values(data)[k])
+        if(changeKey==false){
+            confirmMsg=Object.keys(data)[k]+"  :  "+outPupInputList[k]+"=>"+Object.values(data)[k]+"\n"+confirmMsg;
+        }
+        
+    };
+    let con=confirm(confirmMsg);
+    if(con){
+        console.log("confirm Checked ","OK")
+        // database_f.ref(outKeyPath.substring(0,outKeyPath.length-2)).update(data).then(()=>{console.log("upload Successed");location.reload();}).catch((e)=>{alert(e)});
+    }
+}
+// const mobileCheck = navigator.userAgent.match(/Android/i) || navigator.userAgent.match(/webOS/i) || navigator.userAgent.match(/iPhone/i) || navigator.userAgent.match(/iPad/i) || navigator.userAgent.match(/iPod/i) || navigator.userAgent.match(/BlackBerry/i) || navigator.userAgent.match(/Windows Phone/i);
+const mobileCheck=/Android|iPhone/i.test(navigator.userAgent);
+console.log(mobileCheck);
+if(mobileCheck){
+    alert("모바일 환경에서는 사용이 제한됩니다.");
 }

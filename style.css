@@ -78,12 +78,12 @@ table{
 .outLogTitle{
     border-radius: 0.625rem;
     margin:0.1rem;
-    background-color: rgb(140, 151, 176);
     display:grid;
     grid-template-rows: 3vh 16vh;
 }
 .outTitle{
     overflow-y:scroll;
+    background-color: rgb(140, 151, 176);
 }
 
 .outTitle::-webkit-scrollbar {
@@ -121,5 +121,9 @@ table{
     height:85%;
     width:90%;
     font-size:0.7rem;
+}
+button{
+    border-radius: 0.3rem;
+    background-color: rgb(199, 212, 228);
 }
 
