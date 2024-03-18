@@ -105,7 +105,6 @@ function initDataTableTbody(){
                     }
                 }
             }
-            if(!mobileCheck)
             tbody.appendChild(tr);
         }
     });
