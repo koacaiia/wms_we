@@ -90,6 +90,12 @@ table{
     display:grid;
     grid-template-rows: 3vh 16vh;
 }
+.outLogTitleM{
+    border-radius: 0.4rem;
+    margin:0.1rem;
+    display:grid;
+    grid-template-rows: 6vh 20.5vh;
+}
 .outTitle{
     overflow-y:scroll;
     background-color: rgb(140, 151, 176);
