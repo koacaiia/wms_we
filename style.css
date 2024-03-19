@@ -76,8 +76,8 @@ th{
 td{
     font-size:normal;
     text-align: center;
-    text-overflow:scroll;
-    /* overflow: hidden; */
+    text-overflow:ellipsis;
+    overflow: hidden;
     white-space: nowrap;
 }
 table{
