@@ -285,7 +285,26 @@
             <button id="outRegChange"  onclick="outDataChange()">출고내용변경</button>
             <button id="outRegCancel"  onclick="outRegCancel()">취소</button>
         </div>
-        
+    </div>
+    <div id="pltPopTableDiv" style="display:none">
+        <table id="pltPopTable">
+            <thead>
+                <tr>
+                    <th>일자</th>
+                    <th>PLT 유형</th>
+                    <th>입고수량</th>
+                    <th>사용수량</th>
+                    <th>비고
+                    </th>
+                </tr>
+            </thead>
+            <tbody id="pltPopTableTbody">
+            </tbody>
+        </table>
+        <div>
+            <button id="pltPopClose" onclick="pltPopClose()">닫기</button>
+            <button id="pltExcelDown" onclick="pltPopDown()">내역엑셀 받기</button>
+        </div>
     </div>
     <script src="main.js"></script>
     

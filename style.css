@@ -74,7 +74,7 @@ th{
     padding:0rem;
 }
 td{
-    font-size:normal;
+    font-size:small;
     text-align: center;
     text-overflow:ellipsis;
     overflow: hidden;

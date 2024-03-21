@@ -26,6 +26,7 @@ let outKeyPath="";
 let outTrClickValu=[];
 let outStockValue={};
 let outPupInputList=[];
+let pltData={};
 const key_f=["date","managementNo","description","outwarehouse","eaQty","pltQty","remark"];
 function transDate(date){
     try{
@@ -48,18 +49,20 @@ function pltStock(){
         const val=snapshot.val();
         for(let i in val){
             const valD=val[i];
+            pltData[i]=valD;
             for(let j in valD){
-                if(pltList.length==undefined){
-               pltList[valD[j]["type"]]={in:valD[j]["inNum"],out:valD[j]["outNum"],re:valD[j]["re"]};
+                const type=(valD[j]["type"])
+                if(Object.keys(pltList).includes(type)==false){
+               pltList[type]={inNum:valD[j]["inNum"],outNum:valD[j]["outNum"],re:valD[j]["re"],type:valD[j]["type"]};
             }
             else{
-            pltList[valD[j]["type"]]={in:parseInt(pltList[valD[j]["type"]]["in"])+parseInt(valD[j]["inNum"]),out:parseInt(pltList[valD[j]["type"]]["out"])+parseInt(valD[j]["outNum"]),re:parseInt(pltList[valD[j]["type"]]["re"])+parseInt(valD[j]["re"])};
+            pltList[type]={inNum:parseInt(pltList[type]["inNum"])+parseInt(valD[j]["inNum"]),outNum:parseInt(pltList[type]["outNum"])+parseInt(valD[j]["outNum"]),re:pltList[type]["re"]+parseInt(valD[j]["re"])};
             }
         }
     }
     let stockTitle="";
     for(let i in pltList){
-         const stock=parseInt(pltList[i]["in"])-parseInt(pltList[i]["out"]);
+         const stock=parseInt(pltList[i]["inNum"])-parseInt(pltList[i]["outNum"]);
          stockTitle=stockTitle+i+" : "+stock+"장 ,";
     }
     document.getElementById("pltStock").innerHTML=stockTitle.substring(0,stockTitle.length-1);
@@ -203,6 +206,11 @@ function initLogTableTbody(sDate,eDate,init){
                                                 outCountC[keyValue]={eaQty:parseInt(outCountC[keyValue]["eaQty"])+parseInt(tr.cells[4].innerHTML),pltQty:parseInt(outCountC[keyValue]["pltQty"])+parseInt(tr.cells[5].innerHTML),count:parseInt(outCountC[keyValue]["count"])+1};
                                             }
                                         }   
+                                        const idValue=tr.cells[1].innerHTML+"_"+tr.cells[2].innerHTML;
+                                        if(outStockValue[idValue]==undefined){
+                                            outStockValue[idValue]={eaQty:tr.cells[4].innerHTML,pltQty:tr.cells[5].innerHTML};}
+                                        else{
+                                            outStockValue[idValue]={eaQty:parseInt(outStockValue[idValue]["eaQty"])+parseInt(tr.cells[4].innerHTML),pltQty:parseInt(outStockValue[idValue]["pltQty"])+parseInt(tr.cells[5].innerHTML)};}
                                         
                                         tr.addEventListener("click",function(e){
                                             outTrClick(e);
@@ -251,7 +259,6 @@ function initLogTableTbody(sDate,eDate,init){
                                 else{
                                     outStockValue[idValue]={eaQty:parseInt(outStockValue[idValue]["eaQty"])+parseInt(tr.cells[4].innerHTML),pltQty:parseInt(outStockValue[idValue]["pltQty"])+parseInt(tr.cells[5].innerHTML)};}
                             }
-                            
                             tr.addEventListener("click",function(e){
                                 outTrClick(e);
                             });
@@ -448,7 +455,33 @@ document.getElementById("pltType").addEventListener("change",function(){
 
 });
 function pltDetail(){
-    alert("작업 진행중입니다.");
+    const thList=["date","type","inNum","outNum","re"];
+    const popup = document.getElementById('pltPopTableDiv');
+    popup.style.position = "fixed";
+    popup.style.top = '50%';
+    popup.style.left = '50%';
+    popup.style.transform = 'translate(-50%, -50%)';
+    popup.style.backgroundColor = 'white';
+    popup.style.padding = '20px';
+    popup.style.border = '2px solid black';
+    popup.style.borderRadius = '10px';
+    popup.style.display ="grid";
+    popup.style.gridTemplateRows="10fr 1fr";
+    for(let i in pltData){
+        for(let j in pltData[i]){
+            const tr=document.createElement("tr");
+            for(let k in thList){
+                const td=document.createElement("td");
+                td.innerHTML=pltData[i][j][thList[k]];
+                tr.appendChild(td);
+            }
+            popup.children[0].appendChild(tr);
+        }
+    }
+}
+function pltPopClose(){
+    const popup = document.getElementById('pltPopTableDiv');
+    popup.style.display = "none";
 }
 function btnOutDown(){
     const outDiv=document.getElementById("outCompleteTableDiv").classList.value;
@@ -500,7 +533,6 @@ function outTrClick(e){
         const date=trList[0].innerHTML;
         const trPath=clickTr.id;
         outKeyPath="DeptName/"+deptName+"/OutCargo/"+date.substring(5,7)+"월/"+date+"/"+trPath;
-        console.log("outTrClicked",outPupInputList)
 }
 function outDataDel(){
     let con=confirm("해당 내용을 삭제하시겠습니까?");
@@ -524,7 +556,6 @@ function outStatusChange(){
     let con=confirm(confirmMsg);
     if(con){
         database_f.ref(outKeyPath.substring(0,outKeyPath.length-2)).update(workprocess).then(()=>{location.reload()}).catch((e)=>{alert(e)});
-        
     }
 }
 function outDataChange(){
@@ -556,8 +587,7 @@ function outDataChange(){
     };
     let con=confirm(confirmMsg);
     if(con){
-        console.log("confirm Checked ","OK")
-        // database_f.ref(outKeyPath.substring(0,outKeyPath.length-2)).update(data).then(()=>{console.log("upload Successed");location.reload();}).catch((e)=>{alert(e)});
+        database_f.ref(outKeyPath.substring(0,outKeyPath.length-2)).update(data).then(()=>{location.reload();console.log("upload Successed");location.reload();}).catch((e)=>{alert(e)});
     }
 }
 // const mobileCheck = navigator.userAgent.match(/Android/i) || navigator.userAgent.match(/webOS/i) || navigator.userAgent.match(/iPhone/i) || navigator.userAgent.match(/iPad/i) || navigator.userAgent.match(/iPod/i) || navigator.userAgent.match(/BlackBerry/i) || navigator.userAgent.match(/Windows Phone/i);
