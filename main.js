@@ -84,13 +84,19 @@ function initDataTableTbody(){
                 const data=val1[j][k];
                 if(data["consignee"]==consigneeName){
                     let key=data["bl"]+"_"+data["description"];
-                    if(tdValue[key]==undefined){tdValue[key]={date:data["date"],bl:data["bl"],description:data["description"],incargo:parseInt(data["incargo"]),Pqty:parseInt(data["Pqty"]),remark:data["remark"]};}else{
+                    if(tdValue[key]==undefined){tdValue[key]={date:data["date"],bl:data["bl"],description:data["description"],incargo:parseInt(data["incargo"]),Pqty:parseInt(data["Pqty"]),remark:data["remark"]};}
+                    else{
                         tdValue[key]={date:data["date"],bl:data["bl"],description:data["description"],incargo:parseInt(data["incargo"])+parseInt(tdValue[key]["incargo"]),Pqty:parseInt(data["Pqty"])+parseInt(tdValue[key]["Pqty"]),remark:data["remark"]};
                     }
+                    
                 };
            }
         }}
         for(let i in tdValue){
+            console.log(tdValue[i]["Pqty"]);
+            if(isNaN(tdValue[i]["Pqty"])){
+                tdValue[i]["Pqty"]="미정";
+            }
             const tr=document.createElement("tr");
             tr.setAttribute("id",tdValue[i]["bl"]+"_"+tdValue[i]["description"]);
             tr.addEventListener("click",function(e){
