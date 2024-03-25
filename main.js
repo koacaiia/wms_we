@@ -83,7 +83,7 @@ function initDataTableTbody(){
               for(let k in val1[j]){
                 const data=val1[j][k];
                 if(data["consignee"]==consigneeName){
-                    let key=data["date"]+"_"+data["bl"]+"_"+data["description"];
+                    let key=data["bl"]+"_"+data["description"];
                     if(tdValue[key]==undefined){tdValue[key]={date:data["date"],bl:data["bl"],description:data["description"],incargo:parseInt(data["incargo"]),Pqty:parseInt(data["Pqty"]),remark:data["remark"]};}else{
                         tdValue[key]={date:data["date"],bl:data["bl"],description:data["description"],incargo:parseInt(data["incargo"])+parseInt(tdValue[key]["incargo"]),Pqty:parseInt(data["Pqty"])+parseInt(tdValue[key]["Pqty"]),remark:data["remark"]};
                     }
@@ -419,7 +419,7 @@ function regPLT(){
         outNum : outNum,
         re : re
     }
-    const key="DeptName/"+deptName+"/PltManagement/"+consigneeName+"/"+type+"/"+date;
+    const key="DeptName/"+deptName+"/PltManagement/"+consigneeName+"/"+type+"/"+date+"_"+new Date().getTime();
     database_f.ref(key).update(data).then(()=>{location.reload()}).catch((e)=>{alert("팔렛트 등록정보 실패",e)});
 }
 function popPlt(){    
@@ -482,6 +482,11 @@ function pltDetail(){
 function pltPopClose(){
     const popup = document.getElementById('pltPopTableDiv');
     popup.style.display = "none";
+}
+function pltPopDown(){
+    const fileName = consigneeName+"_팔렛트현황.xlsx";
+    const wb = XLSX.utils.table_to_book(document.getElementById('pltPopTable'), {sheet:consigneeName,raw:true});
+    XLSX.writeFile(wb, (fileName));
 }
 function btnOutDown(){
     const outDiv=document.getElementById("outCompleteTableDiv").classList.value;
