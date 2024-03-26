@@ -93,7 +93,6 @@ function initDataTableTbody(){
            }
         }}
         for(let i in tdValue){
-            console.log(tdValue[i]["Pqty"]);
             if(isNaN(tdValue[i]["Pqty"])){
                 tdValue[i]["Pqty"]="미정";
             }
@@ -150,7 +149,6 @@ function initLogTableTbody(sDate,eDate,init){
                 let cargo = data[key];
                 if(Object.keys(cargo)!= "json 등록시 덥어쓰기 바랍니다"){
                     for(let j in cargo){
-                        
                         if(cargo[j]["consigneeName"]==consigneeName){
                             const  dateCheck=cargo[j]["date"]>=sDate;
                             const dateCheck2=cargo[j]["date"]<=eDate;
@@ -320,8 +318,6 @@ function initLogTableTbody(sDate,eDate,init){
                 tr.appendChild(totalPl);
                 }}
         }}
-
-       
             const tbodyTc=document.getElementById("outCompleteTotal");
             for(let k in outCountC){
                 const trT=document.createElement("tr");
@@ -342,10 +338,36 @@ function initLogTableTbody(sDate,eDate,init){
                 trT.appendChild(tdPl);
                 tbodyTc.appendChild(trT);
             }
-        }
-    
-    );
-}
+            const trList = document.querySelectorAll("#dataTableTbody tr");
+            for(let t=0;t<trList.length;t++){
+                const ch = trList[t].cells[6];
+                let st0;
+                if(trList[t].cells[8]!=undefined){
+                    st0= trList[t].cells[8].innerHTML;
+                    if(st0==0){
+                        trList[t].setAttribute("class","hidden");
+                    }
+                }
+                
+                if(ch==undefined){
+                    const tdEa=document.createElement("td");
+                    tdEa.innerHTML="0";
+                    trList[t].appendChild(tdEa);
+                    const tdPl=document.createElement("td");
+                    tdPl.innerHTML="0";
+                    trList[t].appendChild(tdPl);
+                    const totalEa=document.createElement("td");
+                    totalEa.innerHTML=trList[t].cells[3].innerHTML;
+                    trList[t].appendChild(totalEa);
+                    const totalPl=document.createElement("td");
+                    totalPl.innerHTML=trList[t].cells[4].innerHTML;
+                    trList[t].appendChild(totalPl);
+                }
+                document.getElementById("dataTableTbody").appendChild(trList[t]);
+            }
+
+        });
+    }
 function searchDate(){
     console.log("searchDate")
     const sDate=document.getElementById("startDate").value;
@@ -607,6 +629,19 @@ function excelFile(){
     const fileName = deptName+"_"+clientName+" 출고현황("+dateS+"~"+dateE+").xlsx";
             const wb = XLSX.utils.table_to_book(document.getElementById('table_data'), {sheet:"test",raw:true});
             XLSX.writeFile(wb, (fileName));
+
+}
+function btnStock0(){
+    const trList = document.querySelectorAll("#dataTableTbody tr");
+    for(let t =0;t<trList.length;t++){
+        let st0;
+        if(trList[t].cells[8]!=undefined){
+            st0= trList[t].cells[8].innerHTML;
+            if(st0==0){
+                trList[t].classList.toggle("hidden");
+            }
+        }
+    }
 
 }
 
